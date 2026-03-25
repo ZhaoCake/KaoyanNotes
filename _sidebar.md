@@ -1,4 +1,5 @@
-- [首页](/)
+<!-- markdownlint-disable MD041 -->
+- [首页](README.md)
 - [学习记录](学习记录.md)
 
 - 数学

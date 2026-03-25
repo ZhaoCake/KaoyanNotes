@@ -6,17 +6,272 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaoyan Notes</title>
   <meta name="description" content="考研笔记与错题整理" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@400;700&display=swap" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
   <style>
+    :root {
+      --theme-color: #7c9cf5;
+      --theme-color-light: rgba(124, 156, 245, 0.18);
+      --surface: rgba(255, 255, 255, 0.74);
+      --surface-strong: rgba(255, 255, 255, 0.84);
+      --text-main: #24324b;
+      --text-soft: #51607a;
+      --border-soft: rgba(255, 255, 255, 0.38);
+      --shadow-soft: 0 18px 45px rgba(24, 42, 80, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'LXGW WenKai', sans-serif;
+      color: var(--text-main);
+      background-color: #f5f7fb;
+      background-image: var(--site-bg, linear-gradient(135deg, #e8eefc 0%, #f7f9ff 100%));
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(245, 247, 251, 0.3), rgba(255, 255, 255, 0.56));
+      backdrop-filter: blur(10px);
+      z-index: -2;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.28), transparent 28%),
+        radial-gradient(circle at 80% 0%, rgba(124, 156, 245, 0.18), transparent 24%),
+        radial-gradient(circle at 50% 80%, rgba(182, 205, 255, 0.16), transparent 26%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    a {
+      color: #5f78d9;
+    }
+
+    .app-nav,
     .sidebar .app-name {
-      font-size: 1.2rem;
+      font-family: 'LXGW WenKai', sans-serif;
+    }
+
+    .app-nav {
+      position: fixed;
+      right: 24px;
+      top: 18px;
+      z-index: 10;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.42);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .app-nav a {
+      color: var(--text-main);
+    }
+
+    .sidebar {
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      border-right: 1px solid var(--border-soft);
+      box-shadow: 8px 0 30px rgba(42, 56, 92, 0.08);
+    }
+
+    .sidebar-toggle {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(14px);
+      border-right: 1px solid var(--border-soft);
+    }
+
+    .sidebar .app-name {
+      font-size: 1.35rem;
       font-weight: 700;
+      padding: 22px 16px 12px;
+      color: var(--text-main);
+    }
+
+    .sidebar ul li a {
+      border-radius: 10px;
+      margin: 3px 10px;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar ul li a:hover,
+    .sidebar ul li.active > a {
+      background: var(--theme-color-light);
+      color: #4b64c8;
+    }
+
+    .content {
+      padding-top: 28px;
+    }
+
+    .markdown-section {
+      max-width: 960px;
+      margin: 28px auto 48px;
+      padding: 34px 42px;
+      background: var(--surface-strong);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-soft);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      color: var(--text-main);
+    }
+
+    .markdown-section h1,
+    .markdown-section h2,
+    .markdown-section h3,
+    .markdown-section h4,
+    .markdown-section strong,
+    .markdown-section em,
+    .sidebar,
+    .search,
+    .search input {
+      font-family: 'LXGW WenKai', sans-serif !important;
+    }
+
+    .markdown-section h1,
+    .markdown-section h2,
+    .markdown-section h3 {
+      color: #1f2f4f;
+    }
+
+    .markdown-section code,
+    .markdown-section pre,
+    .token {
+      font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace !important;
+    }
+
+    .markdown-section blockquote,
+    .markdown-section table,
+    .markdown-section pre {
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .markdown-section blockquote {
+      background: rgba(124, 156, 245, 0.08);
+      border-left: 4px solid rgba(124, 156, 245, 0.55);
+      color: var(--text-soft);
+    }
+
+    .markdown-section pre {
+      box-shadow: inset 0 0 0 1px rgba(124, 156, 245, 0.08);
+    }
+
+    .search {
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+
+    .search input {
+      border-radius: 12px;
+      border: 1px solid rgba(124, 156, 245, 0.18);
+      background: rgba(255, 255, 255, 0.78);
+      padding: 10px 14px;
+      color: var(--text-main);
+    }
+
+    .search input:focus {
+      outline: none;
+      border-color: rgba(124, 156, 245, 0.52);
+      box-shadow: 0 0 0 4px rgba(124, 156, 245, 0.12);
+    }
+
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 6px 0;
+    }
+
+    .cursor-glow {
+      position: fixed;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(124, 156, 245, 0.35) 0%, rgba(124, 156, 245, 0.12) 45%, rgba(124, 156, 245, 0) 72%);
+      mix-blend-mode: screen;
+      transition: transform 0.06s ease-out, opacity 0.2s ease;
+      opacity: 0.85;
+    }
+
+    @media screen and (max-width: 768px) {
+      .app-nav {
+        right: 14px;
+        top: 12px;
+        padding: 6px 10px;
+      }
+
+      .markdown-section {
+        margin: 16px 12px 28px;
+        padding: 24px 18px;
+        border-radius: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor-glow,
+      .sidebar ul li a {
+        transition: none;
+      }
     }
   </style>
 </head>
 <body>
   <div id="app">加载中...</div>
+  <div class="cursor-glow" aria-hidden="true"></div>
   <script>
+    const backgroundImages = [
+      'imgs/2025-04-02T16-20-07_2763x1650_ec43126fgy1gz5d55jg87j224r19u7wj.jpg',
+      'imgs/2025-04-03T04-50-17_1486x897_ec43126fgy1go5n8rp3zxj215a0oxe82.jpg',
+      'imgs/2025-04-21T10-24-58_1637x1066_ec43126fgy1gpg8newdj7j219h0tm7wi.jpg',
+      'imgs/2025-04-21T10-25-32_2000x1300_ec43126fgy1go5nbzu9ffj21jk104e83.jpg',
+      'imgs/2025-05-02T02-47-51_1920x1080_ec43126fgy1go5n92j9agj21hc0u0x6p.jpg',
+      'imgs/2025-08-20T07-25-10_2000x1250_ec43126fgy1go5n9jzx8pj21jk0yqe82.jpg',
+      'imgs/2025-08-20T07-25-11_9240x5314_ec43126fgy1h07szfkod9j274o43me81.jpg',
+      'imgs/2025-08-20T07-25-12_5359x3070_ec43126fgy1h0nngridgij244v2danpl.jpg',
+      'imgs/2025-08-20T07-25-55_2560x1480_ec43126fgy1gmmh326p9ij21z41547u9.jpg',
+      'imgs/2026-02-12T07-07-28_2488x1400_ec43126fgy1h3qwovfrvdj21x412wnpe.jpg',
+      'imgs/2026-02-12T07-07-40_2020x1321_ec43126fgy1gwjqvksjruj21k410pe81.jpg',
+      'imgs/2026-02-12T07-26-17_2006x1362_ec43126fgy1gy0xgrzi2cj21jq11uu0x.jpg',
+      'imgs/batch_1770945931746_0.jpg',
+      'imgs/batch_1770945931819_1.jpg',
+      'imgs/batch_1770945931836_2.jpg',
+      'imgs/batch_1770945932013_3.jpg'
+    ];
+
+    const chosenBg = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+    document.documentElement.style.setProperty(
+      '--site-bg',
+      `linear-gradient(135deg, rgba(245,247,251,0.22), rgba(255,255,255,0.46)), url("${chosenBg}")`
+    );
+
     window.$docsify = {
       name: 'Kaoyan Notes',
       repo: '',
@@ -24,6 +279,7 @@
       subMaxLevel: 2,
       auto2top: true,
       relativePath: true,
+      homepage: 'README.md',
       search: {
         maxAge: 86400000,
         paths: 'auto',
@@ -31,10 +287,32 @@
         noData: '没有找到结果'
       }
     };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const cursor = document.querySelector('.cursor-glow');
+      if (!cursor || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+      }
+
+      document.addEventListener('pointermove', (event) => {
+        cursor.style.transform = `translate(${event.clientX - 14}px, ${event.clientY - 14}px)`;
+      }, { passive: true });
+
+      document.addEventListener('pointerdown', () => {
+        cursor.style.opacity = '1';
+        cursor.style.width = '34px';
+        cursor.style.height = '34px';
+      });
+
+      document.addEventListener('pointerup', () => {
+        cursor.style.opacity = '0.85';
+        cursor.style.width = '28px';
+        cursor.style.height = '28px';
+      });
+    });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
 </body>
 </html>
