@@ -6,21 +6,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaoyan Notes</title>
   <meta name="description" content="考研笔记与错题整理" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@400;700&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
   <style>
     :root {
       --theme-color: #7c9cf5;
       --theme-color-light: rgba(124, 156, 245, 0.18);
-      --surface: rgba(255, 255, 255, 0.74);
-      --surface-strong: rgba(255, 255, 255, 0.84);
+      --surface: rgba(255, 255, 255, 0.28);
+      --surface-strong: rgba(255, 255, 255, 0.58);
       --text-main: #24324b;
       --text-soft: #51607a;
-      --border-soft: rgba(255, 255, 255, 0.38);
+      --border-soft: rgba(255, 255, 255, 0.3);
       --shadow-soft: 0 18px 45px rgba(24, 42, 80, 0.16);
+      --overlay-bg: linear-gradient(135deg, rgba(245, 247, 251, 0.06), rgba(255, 255, 255, 0.12));
+      --nav-bg: rgba(255, 255, 255, 0.24);
+      --input-bg: rgba(255, 255, 255, 0.72);
+      --blockquote-bg: rgba(124, 156, 245, 0.08);
+      --blockquote-border: rgba(124, 156, 245, 0.55);
+      --code-inset: rgba(124, 156, 245, 0.08);
+      --control-text: #1f2f4f;
+    }
+
+    body[data-theme='dark'] {
+      --theme-color: #8ea8ff;
+      --theme-color-light: rgba(142, 168, 255, 0.18);
+      --surface: rgba(20, 24, 36, 0.18);
+      --surface-strong: rgba(18, 22, 34, 0.52);
+      --text-main: #ebf1ff;
+      --text-soft: #c0cee9;
+      --border-soft: rgba(255, 255, 255, 0.12);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.35);
+      --overlay-bg: linear-gradient(135deg, rgba(10, 14, 22, 0.22), rgba(15, 19, 28, 0.18));
+      --nav-bg: rgba(15, 19, 28, 0.3);
+      --input-bg: rgba(20, 24, 36, 0.58);
+      --blockquote-bg: rgba(142, 168, 255, 0.08);
+      --blockquote-border: rgba(142, 168, 255, 0.45);
+      --code-inset: rgba(142, 168, 255, 0.1);
+      --control-text: #ebf1ff;
     }
 
     * {
@@ -34,7 +57,7 @@
 
     body {
       margin: 0;
-      font-family: 'LXGW WenKai', sans-serif;
+      font-family: 'LXGW WenKai', 'LXGW WenKai Screen', 'Microsoft YaHei', sans-serif;
       color: var(--text-main);
       background-color: #f5f7fb;
       background-image: var(--site-bg, linear-gradient(135deg, #e8eefc 0%, #f7f9ff 100%));
@@ -49,8 +72,7 @@
       content: '';
       position: fixed;
       inset: 0;
-      background: linear-gradient(135deg, rgba(245, 247, 251, 0.3), rgba(255, 255, 255, 0.56));
-      backdrop-filter: blur(10px);
+      background: var(--overlay-bg);
       z-index: -2;
     }
 
@@ -72,7 +94,7 @@
 
     .app-nav,
     .sidebar .app-name {
-      font-family: 'LXGW WenKai', sans-serif;
+      font-family: 'LXGW WenKai', 'LXGW WenKai Screen', 'Microsoft YaHei', sans-serif;
     }
 
     .app-nav {
@@ -82,8 +104,7 @@
       z-index: 10;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.42);
-      backdrop-filter: blur(16px);
+      background: var(--nav-bg);
       box-shadow: var(--shadow-soft);
     }
 
@@ -93,14 +114,12 @@
 
     .sidebar {
       background: var(--surface);
-      backdrop-filter: blur(18px);
       border-right: 1px solid var(--border-soft);
       box-shadow: 8px 0 30px rgba(42, 56, 92, 0.08);
     }
 
     .sidebar-toggle {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(14px);
+      background: var(--nav-bg);
       border-right: 1px solid var(--border-soft);
     }
 
@@ -132,7 +151,8 @@
       margin: 28px auto 48px;
       padding: 34px 42px;
       background: var(--surface-strong);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(18px) saturate(115%);
+      -webkit-backdrop-filter: blur(18px) saturate(115%);
       border: 1px solid var(--border-soft);
       border-radius: 24px;
       box-shadow: var(--shadow-soft);
@@ -148,13 +168,13 @@
     .sidebar,
     .search,
     .search input {
-      font-family: 'LXGW WenKai', sans-serif !important;
+      font-family: 'LXGW WenKai', 'LXGW WenKai Screen', 'Microsoft YaHei', sans-serif !important;
     }
 
     .markdown-section h1,
     .markdown-section h2,
     .markdown-section h3 {
-      color: #1f2f4f;
+      color: var(--text-main);
     }
 
     .markdown-section code,
@@ -171,13 +191,13 @@
     }
 
     .markdown-section blockquote {
-      background: rgba(124, 156, 245, 0.08);
-      border-left: 4px solid rgba(124, 156, 245, 0.55);
+      background: var(--blockquote-bg);
+      border-left: 4px solid var(--blockquote-border);
       color: var(--text-soft);
     }
 
     .markdown-section pre {
-      box-shadow: inset 0 0 0 1px rgba(124, 156, 245, 0.08);
+      box-shadow: inset 0 0 0 1px var(--code-inset);
     }
 
     .search {
@@ -188,9 +208,43 @@
     .search input {
       border-radius: 12px;
       border: 1px solid rgba(124, 156, 245, 0.18);
-      background: rgba(255, 255, 255, 0.78);
+      background: var(--input-bg);
       padding: 10px 14px;
       color: var(--text-main);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 12;
+      border: 1px solid var(--border-soft);
+      background: var(--nav-bg);
+      color: var(--control-text);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font: inherit;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+    }
+
+    body[data-theme='dark'] .sidebar ul li a,
+    body[data-theme='dark'] .app-nav a,
+    body[data-theme='dark'] .sidebar .app-name,
+    body[data-theme='dark'] .search input,
+    body[data-theme='dark'] .markdown-section,
+    body[data-theme='dark'] .markdown-section code {
+      color: var(--text-main);
+    }
+
+    body[data-theme='dark'] .sidebar ul li a:hover,
+    body[data-theme='dark'] .sidebar ul li.active > a {
+      color: #dfe8ff;
     }
 
     .search input:focus {
@@ -228,6 +282,11 @@
         padding: 6px 10px;
       }
 
+      .theme-toggle {
+        right: 14px;
+        bottom: 14px;
+      }
+
       .markdown-section {
         margin: 16px 12px 28px;
         padding: 24px 18px;
@@ -246,7 +305,13 @@
 <body>
   <div id="app">加载中...</div>
   <div class="cursor-glow" aria-hidden="true"></div>
+  <button class="theme-toggle" type="button" aria-label="切换夜间模式">🌙 夜间</button>
   <script>
+    const savedTheme = localStorage.getItem('kaoyan-notes-theme');
+    const preferredDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const activeTheme = savedTheme || (preferredDark ? 'dark' : 'light');
+    document.body.setAttribute('data-theme', activeTheme);
+
     const backgroundImages = [
       'imgs/2025-04-02T16-20-07_2763x1650_ec43126fgy1gz5d55jg87j224r19u7wj.jpg',
       'imgs/2025-04-03T04-50-17_1486x897_ec43126fgy1go5n8rp3zxj215a0oxe82.jpg',
@@ -278,18 +343,52 @@
       loadSidebar: true,
       subMaxLevel: 2,
       auto2top: true,
-      relativePath: true,
       homepage: 'README.md',
+      executeScript: true,
       search: {
         maxAge: 86400000,
         paths: 'auto',
         placeholder: '搜索笔记',
         noData: '没有找到结果'
-      }
+      },
+      plugins: [
+        function(hook) {
+          hook.doneEach(function() {
+            if (window.renderMathInElement) {
+              window.renderMathInElement(document.querySelector('.markdown-section'), {
+                delimiters: [
+                  { left: '$$', right: '$$', display: true },
+                  { left: '$', right: '$', display: false },
+                  { left: '\\(', right: '\\)', display: false },
+                  { left: '\\[', right: '\\]', display: true }
+                ],
+                throwOnError: false,
+                strict: 'ignore'
+              });
+            }
+          });
+        }
+      ]
     };
 
     document.addEventListener('DOMContentLoaded', () => {
       const cursor = document.querySelector('.cursor-glow');
+      const themeToggle = document.querySelector('.theme-toggle');
+
+      const updateThemeLabel = () => {
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        themeToggle.textContent = isDark ? '☀️ 日间' : '🌙 夜间';
+      };
+
+      updateThemeLabel();
+
+      themeToggle.addEventListener('click', () => {
+        const nextTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.body.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('kaoyan-notes-theme', nextTheme);
+        updateThemeLabel();
+      });
+
       if (!cursor || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         return;
       }
@@ -313,6 +412,7 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/auto-render.min.js"></script>
 </body>
 </html>
