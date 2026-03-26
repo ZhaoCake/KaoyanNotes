@@ -136,6 +136,10 @@
       transition: all 0.2s ease;
     }
 
+    .sidebar ul li {
+      color: var(--text-main);
+    }
+
     .sidebar ul li a:hover,
     .sidebar ul li.active > a {
       background: var(--theme-color-light);
@@ -234,12 +238,38 @@
     }
 
     body[data-theme='dark'] .sidebar ul li a,
+    body[data-theme='dark'] .sidebar ul li,
     body[data-theme='dark'] .app-nav a,
     body[data-theme='dark'] .sidebar .app-name,
     body[data-theme='dark'] .search input,
     body[data-theme='dark'] .markdown-section,
     body[data-theme='dark'] .markdown-section code {
       color: var(--text-main);
+    }
+
+    body[data-theme='dark'] .sidebar > ul > li,
+    body[data-theme='dark'] .sidebar-nav > ul > li,
+    body[data-theme='dark'] .sidebar-nav li > p,
+    body[data-theme='dark'] .sidebar-nav li > strong {
+      color: #f3f7ff !important;
+    }
+
+    body[data-theme='dark'] .markdown-section h1,
+    body[data-theme='dark'] .markdown-section h2,
+    body[data-theme='dark'] .markdown-section h3,
+    body[data-theme='dark'] .markdown-section h4,
+    body[data-theme='dark'] .markdown-section h5,
+    body[data-theme='dark'] .markdown-section h6 {
+      color: #f3f7ff !important;
+    }
+
+    body[data-theme='dark'] .markdown-section h1 a,
+    body[data-theme='dark'] .markdown-section h2 a,
+    body[data-theme='dark'] .markdown-section h3 a,
+    body[data-theme='dark'] .markdown-section h4 a,
+    body[data-theme='dark'] .markdown-section h5 a,
+    body[data-theme='dark'] .markdown-section h6 a {
+      color: #f3f7ff !important;
     }
 
     body[data-theme='dark'] .sidebar ul li a:hover,
